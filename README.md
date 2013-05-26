@@ -5,10 +5,10 @@ The LoginRadius Unified Social API aggregates the functionality of 30 social net
 Features of the API:
 --------------------
 
- - Social Authentication from social networks
- - Fetch user profile data such as profile information, status messages, activities, events, group, companies, etc.
+ - Social Authentication from social networks with user profile data - Basic and extended profile data
  - Invite friends from social network using Contact/Friends API and Write API
- - Update status message for user's social network
+ - Fetch user's activities in social networks - Facebook groups, Facebook posts, Facebook events, Twitter mentions, Twitter timeline, LinkedIn followed companies, etc.
+ - Update status message on user's social network
 
 Social Authentication and User profile data API
 ----
@@ -33,7 +33,7 @@ The social profile data is divided into 2 groups:
  
 ##### JSON Format
 
-Name	|Type	|Read-only	|Description
+Name |Type	|Read-only	|Description
 ------ | ---- | -------- | ---------
 ID	|String	|ReadOnly	|Social ID of the user
 Provider|	String|	ReadOnly|	Social ID Provider of the user
@@ -141,7 +141,7 @@ The API is use to get contacts/network data for user’s social account. This AP
 
 #### API specification
 
-API Endpoint| https://hub.loginradius.com/contacts/{SECRET}/{TOKEN}
+API Endpoint|	https://hub.loginradius.com/contacts/{SECRET}/{TOKEN}
 ------------|--------------------
 **API help Endpoint**| https://hub.loginradius.com/contacts/help
 **Request Type**|	HTTP Get Request
