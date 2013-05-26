@@ -1,13 +1,22 @@
 LoginRadius Unified Social API
 ====
-The LoginRadius Unified Social API is implemented as REST over HTTPS using GET/POST. Using API you can do social authentication, social Sharing and to capture user profile data from 25+ ID providers. All the resources have their own functions in the API and you can use features such as Social Account linking, Friend Invite, online/offline access, etc.
+The LoginRadius Unified Social API aggregates the functionality of 30 social networks into one. It is a REST API over HTTPS and uses GET/POST requests for implementation. The Get request is use to fetch the data from different social networks and Post request is use to write/push the data into different social networks. 
 
-Social Authentication API
+Features of the API:
+--------------------
+
+ - Social Authentication from social networks
+ - Fetch user profile data such as profile information, status messages, activities, events, group, companies, etc.
+ - Invite friends from social network using Contact/Friends API and Write API
+ - Update status message for user's social network
+
+Social Authentication and User profile data API
 ----
-This API is use to authenticate users from their social network. The API would return the success response after authenticated from Social ID provider and also return the unique provider Identifier. The social authentication is supported by oAuth and OpenID protocols.
+This API is use to authenticate users from their social network and fetch the user profile data. The API returns success response after authentication from Social networks and also returns user profile data. The social authentication is supported by oAuth (v1 and v2) and OpenID protocols. 
+
+> Returns normalized user profile data set into aggregates LoginRadius data format.
 
 #### API specification
-
 
 API Endpoint| https://hub.loginradius.com/UserProfile.ashx?apisecrete={SECRET}&token={TOKEN} 
  ---------   |   ----- 
@@ -16,45 +25,6 @@ API Endpoint| https://hub.loginradius.com/UserProfile.ashx?apisecrete={SECRET}&t
 **Input Parameters**      | LoginRadius API Secret, User profile session Token
 **Error Codes** | 403 Forbidden : Your API secret or token is invalid
 **Response** | JSON
-
-#### JSON Format
-Name | Type | Read-Only |  Description
----- | ---- | --------- |    -----------
-ID  | String |	ReadOnly| Social ID of the user
-Provider	|String|	ReadOnly|	Social ID Provider of the user
-Email->Type|	String|	ReadOnly|	Email type
-Email->Value	|String	|ReadOnly|	Email of the user
-
-#### Sample JSON
-
-    {
-          "ID":"00000010411351",
-          “Provider”: “Facebook”,
-          "Email":[
-            {
-                  "Type":"Primary",
-          	  "Value":"example@example.com"
-            }
-            {
-                  "Type":"Secondary",
-                  "Value":"example@example.com"
-            }
-          ],
-     }
-
-User Profile API
----
-This API is use to get the social profile data from user’s social account after authentication. The social profile will be retrieved via oAuth and OpenID protocols. The data would be normalized into LoginRadius’s JSON format.
-
-#### API specification
- 
-API Endpoint	| https://hub.loginradius.com/UserProfile.ashx?apisecrete={SECRET}&token={TOKEN}
-------------   |  ---------
-**API help Endpoint**	|https://hub.loginradius.com/userprofile.ashx/help
-**Request Type**|	HTTP Get Request
-**Input Parameters**|	LoginRadius API Secret, User profile session Token
-**Error Codes**	|403 Forbidden : Your API secret or token is invalid
-**Response**	| JSON
 
 The social profile data is divided into 2 groups:
 
@@ -159,49 +129,27 @@ FavoriteThings|	String|	ReadOnly|	Favorite things of the user
 ProfessionalHeadline|	String|	ReadOnly|	Professional Headline of the user
 ProviderAccessCredential|	Object|	ReadOnly|	Provider Access token
 
-##### Sample JSON
-	{
-       "ID":"00000010411351",
-       “Provider”: “Facebook”,
-       "Prefix":null,
-       "FirstName":"George",
-       "MiddleName":"Andy",
-       "LastName":"Rodik",
-       "Suffix":null,
-       "FullName":"George Andy Rodik,
-       "NickName":null,
-       "ProfileName":"geogepr",
-       "BirthDate":"08/11/1987",
-       "Gender":"male",
-       "Email":[
-          {
-                "Type":"Primary",
-                "Value":"example@example.com"
-          }
-          {
-       			"Type":"Secondary",
-                "Value":"example@example.com"
-          }
-        ],
-        "Country":'Germany',
-        "TimeZone":"-7",
-	}
+> **Detailed information on user profile data fields and JSON:**
 
-?Contact/Network API
+> Basic User profile data - [Data Fields][1] | [JSON][2]
+
+> Extended User profile data - [Data Fields][3] | [JSON][4]
+
+Contact/Network API
 ---
-This API is use to get contacts/network data for user’s social account. This API is only supported by oAuth ID providers such as Facebook, LinkedIn, Twitter, Google, Yahoo, MSN.
+The API is use to get contacts/network data for user’s social account. This API is supported by oAuth ID providers such as Facebook, LinkedIn, Twitter, Google, Yahoo and MSN.
 
 #### API specification
 
-API Endpoint|	https://hub.loginradius.com/contacts/{SECRET}/{TOKEN}
+API Endpoint| https://hub.loginradius.com/contacts/{SECRET}/{TOKEN}
 ------------|--------------------
-**API help Endpoint**|	https://hub.loginradius.com/contacts/help
+**API help Endpoint**| https://hub.loginradius.com/contacts/help
 **Request Type**|	HTTP Get Request
 **Input Parameters**|	LoginRadius API Secret, User profile session Token
 **Error Codes**|	403 Forbidden : Your api secret or  token is invalid 401 unauthorized : Your api key secret not exists in our system
 **Response**|	JSON
 
-#### JSON Format
+#### Data Fields
 
 Name|	Type|	Read-only|	Description
 ----|----|----|----
@@ -216,25 +164,11 @@ Industry|	String|	ReadOnly|	Industry of the Friend
 Country|	String|	ReadOnly|	Country of the Friend
 Gender|	String|	ReadOnly|	Gender of the Friend
 
-#### Sample JSON
-	[
-	{
-		Name: "LoginRaduis",
-		EmailID: "test@loginradius.com,
-		PhoneNumber: "012121212121",
-		ID: "87547124451",
-		ProfileUrl: “http://www.facebook.com/87547854745”,
-		ImageUrl: https://graph.facebook.com/87547854745/picture,
-		Status: “This is my current status message”,
-		Industry: “IT”,
-		Country: ”US”,
-		Gender: “Male”
-	},
-	]
+> **Detailed information:** [Data Fields][5] | [JSON][6]
 
 User Activities API
 ----
-This API is use to get the profile data from user’s activities from their social account. The API has variations based on the social network like Facebook will provide user’s Groups, posts and events; Twitter will provide Mentions, Timeline; LinkedIn will provide followed companies.
+The API is use to get the profile data from user’s activities from their social account. The API has variations based on the social network like Facebook will provide user’s Groups, posts and events; Twitter will provide Mentions, Timeline; LinkedIn will provide followed companies.
 
 ### a) Get user's Facebook Groups
 ##### API specification
@@ -247,27 +181,12 @@ API Endpoint|	https://hub.loginradius.com/GetGroups/{SECRET}/{TOKEN}
 **Error Codes**|	403 Forbidden : Your api secret or  token is invalid 401 unauthorized : Your api key secret not exists in our system
 **Response**|	JSON
 
-##### JSON Format
+##### Data Fields
  Name	|Type|	Read-only	|Description
 ----|---|----|---
 ID|	String|	ReadOnly|	Social ID of the user
 Name|	String|	ReadOnly|	Group Name
 
-##### Sample JSON
-	[
- 	{             
-		ID: "325558927496078",
-		Name: "Group Name1"
- 	},
- 	{
-		ID: "189026094548878",
-		Name: "Group Name2"
- 	},
- 	{
-		ID: "187232004689444",
-		Name: "Group Name3"
- 	},
-	]
 
 ### b) Get user's Facebook Posts
 API Endpoint|https://hub.loginradius.com/GetPosts/{SECRET}/{TOKEN}
@@ -278,7 +197,7 @@ API Endpoint|https://hub.loginradius.com/GetPosts/{SECRET}/{TOKEN}
 **Error Codes**|	403 Forbidden : Your api secret or  token is invalid 401 unauthorized : Your api key secret not exists in our system
 **Response**|	JSON
 
-##### JSON Format
+##### Data Fields
 Name|	Type|	Read-only|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the post
@@ -292,22 +211,6 @@ Picture|	String|	ReadOnly|	Url of the picture mentioned in the post
 Likes|	Integer|	ReadOnly|	Number of likes of the post
 Share|	String|	ReadOnly|	Number of shares of the post
 
-##### SAMPLE JSON
-	[
- 	{
-		ID: "100000834571501_440628135975002",
-		Name: "John",
-		Title: Philip,
-		StartTime: "Date(1352187235000)/",
-		UpdateTime: "Date(1352187235000)/",
-		Message: "This is an awesome product.",
-		Place: "Canada",
-		Picture: https://fbcdn-photos-a.akamaihd.net/hphotos-ak-prn1/603971_498544000179346_1116425398_s.jpg",
-		Likes: 5,
-		Share: 1
- 	}
-	]
-
 ### c) Get user's Facebook Events
 
 API Endpoint|	https://hub.loginradius.com/GetEvents/{SECRET}/{TOKEN}
@@ -318,7 +221,7 @@ API Endpoint|	https://hub.loginradius.com/GetEvents/{SECRET}/{TOKEN}
 **Error Codes**|	403 Forbidden : Your api secret or  token is invalid 401 unauthorized : Your api key secret not exists in our system
 **Response**|	JSON
 
-##### JSON Format
+##### Data Format
 Name|	Type|	Read-only|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the Event
@@ -326,17 +229,6 @@ Name|	String|	ReadOnly|	Name of the Event
 StartTime|	String|	ReadOnly|	Start time of the Event
 RsvpStatus|	String|	ReadOnly|	Response status of the event
 Location|	String|	ReadOnly|	Location of the Event
-
-##### SAMPLE JSON
-	[
- 	{
-		ID: "325558927496078",
-		Name: "A ski trip"
-		StartTime:””,
-		RsvpStatus:”attending”
-		Location:”Edmonton”
- 	},
-	]
 
 ### d) Get user's Twitter mentions
 
@@ -348,7 +240,7 @@ API Endpoint|	https://hub.loginradius.com/status/mentions/{SECRET}/{TOKEN}
 **Error Codes**|	403 Forbidden : Your api secret or  token is invalid 401 unauthorized : Your api key secret not exists in our system
 **Response**|	JSON
 
-##### JSON Format
+##### Data Format
 Name|	Type|	Read-only|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the mention
@@ -360,7 +252,7 @@ Source|	String	|ReadOnly	Source of the mention
 ImageUrl|	String|	ReadOnly|	ImageUrl of the image in the mention
 LinkUrl|	String|	ReadOnly|	LinkUrl of the mention
 
-### e)Get user's Twitter TimeLine
+### e) Get user's Twitter TimeLine
 
 API Endpoint	|https://hub.loginradius.com/status/timeline/{SECRET}/{TOKEN}
 ----|----
@@ -370,7 +262,7 @@ API Endpoint	|https://hub.loginradius.com/status/timeline/{SECRET}/{TOKEN}
 **Error Codes**|	403 Forbidden : Your api secret or  token is invalid 401 unauthorized : Your api key secret not exists in our system
 **Response**|	JSON
 
-##### JSON Format
+##### Data Format
 Name|	Type	|Read-only|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the Timeline
@@ -382,20 +274,6 @@ Source|	String|	ReadOnly|	Source of the Timeline
 ImageURL|	String|	ReadOnly|	Image URL of the Timeline
 LinkURL|	String|	ReadOnly|	Link URL of the Timeline
 
-##### SAMPLE JSON
-	[
- 	{
-		ID: "245396845445120000",
-		Text: "Hi:-)",
-		DateTime: "9/10/2012 10:42:21 PM",
-		Likes: 0,
-		Place: "Edmonton",
-		Source: "<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>",
-		ImageUrl: http://www.cancer-fund.org/images/share/diy/img_sample.gif,
-		LinkUrl: http://gimp.open-source-solution.org/manual/plug-in-sample-colorize.html
- 	}
-	]
-
 ### f) Get companies followed in LinkedIn
 
 API Endpoint|	https://hub.loginradius.com/GetCompany/{SECRET}/{TOKEN}
@@ -406,28 +284,17 @@ API Endpoint|	https://hub.loginradius.com/GetCompany/{SECRET}/{TOKEN}
 **Error Codes**|	403 Forbidden : Your api secret or  token is invalid 401 unauthorized : Your api key secret not exists in our system
 **Response**|	JSON
 
-##### JSON Format
+##### Data Fields
 
 Name|	Type|	Read-only|	Description
 ----|----|----|----
 ID|	Array|	ReadOnly|	ID of the company
 Name|	Array|	ReadOnly|	Name of the Company
 
-##### SAMPLE JSON
-	[
- 	{ 
-    	ID: 117342,
-     	Name: "IOTAP"
- 	},
- 	{ 
-     	ID: 14425,
-     	Name: "Mirasoft"
- 	} 
-	]
 
 Write Permission API
 ---
-This API is use to write/post message on users social network. The API has variations based on the social network like Facebook can post data on user’s wall; Twitter can post direct message to user; LinkedIn can post direct message to user.
+The API is use to write/post message on users social network. The API has variations based on the social network like Facebook can post data on user’s wall; Twitter can post direct message to user; LinkedIn can post direct message to user.
 
 ####API specification:
 
@@ -447,8 +314,8 @@ To|	String|	 |	Contactlist Member Id that user get from user contact list
 Subject|	String| |	 	Subject of the Message
 Message|	String||	 	Message
 
-#### Sample Response
-True
+#### Response
+True/False
 
 ### a) Post status to facebook's wall
 
@@ -472,8 +339,12 @@ Status|	String||	 	your status message
 Caption|	String||	 	optional parameter caption that you want post in status message
 Description|	String||	 	optional parameter caption that you want post in status message
 
-####Sample Response
-true
+#### Response
+true/false
 
-
-
+  [1]: http://support.loginradius.com/customer/portal/articles/1158295-loginradius-api---json-and-data-tables#Basic%20Profile%20Data%20-%20Data%20fields
+  [2]: http://support.loginradius.com/customer/portal/articles/1158295-loginradius-api---json-and-data-tables#Basic%20Profile%20Data%20-%20Json
+  [3]: http://support.loginradius.com/customer/portal/articles/1158295-loginradius-api---json-and-data-tables#Extended%20profile%20data%20-%20Data%20fields
+  [4]: http://support.loginradius.com/customer/portal/articles/1158295-loginradius-api---json-and-data-tables#Extended%20profile%20data%20-%20Json
+  [5]: http://support.loginradius.com/customer/portal/articles/1158295-loginradius-api---json-and-data-tables#Contacts/Friends%20-%20Data%20Fields
+  [6]: http://support.loginradius.com/customer/portal/articles/1158295-loginradius-api---json-and-data-tables#Contacts/Friends%20-%20JSON
