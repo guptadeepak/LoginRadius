@@ -20,12 +20,12 @@ Social Authentication API
 This API is use to authenticate users from their social network. The API would return the success response after authenticated from Social ID provider and also return the unique provider Identifier. The social authentication is supported by oAuth and OpenID protocols.
 
 #### JSON Format
-Name | Type | Read-Only |  Description
+Name | Type | Permission |  Description
 ---- | ---- | --------- |    -----------
 ID  | String |  ReadOnly| Social ID of the user
 Provider	|String|	ReadOnly|	Social ID Provider of the user
-Email->Type|	String|	ReadOnly|	Email type
-Email->Value	|String	|ReadOnly|	Email of the user
+Email|	Array|	ReadOnly|	Email of the user
+
 
 #### Sample JSON
 
@@ -35,13 +35,13 @@ Email->Value	|String	|ReadOnly|	Email of the user
           "Email":[
             {
                   "Type":"Primary",
-          	  "Value":"example@example.com"
+          	      "Value":"example@example.com"
             }
             {
                   "Type":"Secondary",
                   "Value":"example@example.com"
             }
-          ],
+          ]
      }
 
 
@@ -56,7 +56,7 @@ The social profile data is divided into 2 groups:
  
 ##### <a name="BPDataFields">Basic Profile Data - Data Fields</a>
 
-Name	|Type	|Read-only	|Description
+Name	|Type	|Permission	|Description
 ------ | ---- | -------- | ---------
 ID	|String	|ReadOnly	|Social ID of the user
 Provider|	String|	ReadOnly|	Social ID Provider of the user
@@ -71,8 +71,7 @@ ProfileName|	String|	ReadOnly|	Profile Name of the user
 BirthDate|	String|	ReadOnly|	Birthdate of the user
 Gender|	String|	ReadOnly|	Gender of the user
 Website|	String	|ReadOnly	|Website of the user
-Email->Type|	String|	ReadOnly|	Email type
-Email->Value|	String|	ReadOnly|	Email of the user
+Email|	Array|	ReadOnly|	Email of the user
 Country|	String|	ReadOnly|	Country of the user
 ImageUrl|	String|	ReadOnly|	Image Url of the user
 
@@ -108,7 +107,7 @@ ImageUrl|	String|	ReadOnly|	Image Url of the user
 Extended profile data has lots of information about the user’s social profile data like address, phone no, interest, education, positions, etc. (see the list of all data fields below)
 
 ##### <a name="EDataFields">Extended Profile Data - Data Fields</a>
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 -----|-----|------|------
 ID|	String|	ReadOnly|	Social ID of the user
 Provider|	String|	ReadOnly|	Social ID Provider of the user
@@ -123,8 +122,7 @@ ProfileName|	String|	ReadOnly|	Profile Name of the user
 BirthDate|	String|	ReadOnly|	Birthdate of the user
 Gender|	String|	ReadOnly|	Gender of the user
 Website|	String|	ReadOnly|	Website of the user
-Email->Type|	String|	ReadOnly|	Email type
-Email->Value|	String|	ReadOnly|	Email of the user
+Email|	Array|	ReadOnly|	Email of the user
 Country|	String|	ReadOnly|	Country of the user
 ThumbnailImageUrl|	String|	ReadOnly|	Thumbnail Image Url of the user social avatar
 ImageUrl|	String|	ReadOnly|	Image Url of the user
@@ -214,7 +212,7 @@ This API is use to get contacts/network data for user’s social account. This A
 
 #### <a name="ContactDataFields">Contact/Friends- Data Fields</a>
 
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	Social ID of the user
 Name|	String|	ReadOnly|	Name of the Friend/Follower/Connnection
@@ -250,7 +248,7 @@ This API is use to get the profile data from user’s activities from their soci
 ### <a name="Groups">a) Get user's Facebook Groups</a>
 
 ##### <a name="GroupsDataFields">Facebook Groups-Data Fields</a>
- Name	|Type|	Read-only	|Description
+ Name	|Type|	Permission		|Description
 ----|---|----|---
 ID|	String|	ReadOnly|	Social ID of the user
 Name|	String|	ReadOnly|	Group Name
@@ -274,7 +272,7 @@ Name|	String|	ReadOnly|	Group Name
 ###<a name="PostandWrite"> b) Posts and Write</a>
 
 ##### <a name="WriteDataFields">Posts and Write- Data Fields</a>
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the post
 Name|	String|	ReadOnly|	Name of the user who has posted
@@ -284,20 +282,20 @@ UpdateTime|	String|	ReadOnly|	Update time of the post
 Message|	String|	ReadOnly|	Message of the post
 Place|	String|	ReadOnly|	Place of the post
 Picture|	String|	ReadOnly|	Url of the picture mentioned in the post
-Likes|	Integer|	ReadOnly|	Number of likes of the post
-Share|	String|	ReadOnly|	Number of shares of the post
+Likes|	Number|	ReadOnly|	Number of likes of the post
+Share|	Number|	ReadOnly|	Number of shares of the post
 
 ##### <a name="WriteJSON">Posts and Write- JSON Format</a>
 	[
  	{
 		ID: "100000834571501_440628135975002",
 		Name: "John",
-		Title: Philip,
+		Title: "Philip",
 		StartTime: "Date(1352187235000)/",
 		UpdateTime: "Date(1352187235000)/",
 		Message: "This is an awesome product.",
 		Place: "Canada",
-		Picture: https://fbcdn-photos-a.akamaihd.net/hphotos-ak-prn1/603971_498544000179346_1116425398_s.jpg",
+		Picture: "https://fbcdn-photos-a.akamaihd.net/hphotos-ak-prn1/603971_498544000179346_1116425398_s.jpg",
 		Likes: 5,
 		Share: 1
  	}
@@ -306,7 +304,7 @@ Share|	String|	ReadOnly|	Number of shares of the post
 ### <a name="Events">c) Get user's Facebook Events</a>
 
 #####<a name="EventsDataFields"> Facebook Events- Data Fields</a>
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the Event
 Name|	String|	ReadOnly|	Name of the Event
@@ -328,14 +326,14 @@ Location|	String|	ReadOnly|	Location of the Event
 ### <a name="Mentions">d) Get user's Twitter mentions</a>
 
 ##### <a name="MentionsDataFields">Twitter mentions- Data Fields</a>
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the mention
 Text|	String|	ReadOnly|	Text of the mention
 DateTime|	String|	ReadOnly|	Date and Time of the mention
 Likes|	Integer|	ReadOnly|	Likes of the mention
 Place|	String|	ReadOnly|	Place of the mention
-Source|	String	|ReadOnly	Source of the mention
+Source|	String	|ReadOnly|	Source of the mention
 ImageUrl|	String|	ReadOnly|	ImageUrl of the image in the mention
 LinkUrl|	String|	ReadOnly|	LinkUrl of the mention
 
@@ -348,20 +346,20 @@ LinkUrl|	String|	ReadOnly|	LinkUrl of the mention
 		Likes: 0,
 		Place: "Edmonton",
 		Source: "<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>",
-		ImageUrl: http://www.cancer-fund.org/images/share/diy/img_sample.gif,
-		LinkUrl: http://gimp.open-source-solution.org/manual/plug-in-sample-colorize.html
+		ImageUrl: "http://www.cancer-fund.org/images/share/diy/img_sample.gif",
+		LinkUrl: "http://gimp.open-source-solution.org/manual/plug-in-sample-colorize.html"
  	}
 	]
 
 ### <a name="Timeline">e)Get user's Twitter TimeLine</a>
 
 ##### <a name="TimelineDataFields">Twitter TimeLine- Data Fields</a>
-Name|	Type	|Read-only|	Description
+Name|	Type	|Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the Timeline
 Text|	String|	ReadOnly|	Status of the Timeline
 DateTime|	String|	ReadOnly|	Date of the Timeline
-Likes|	String|	ReadOnly|	No of like for the Timeline
+Likes|	Number|	ReadOnly|	No of like for the Timeline
 Place|	String|	ReadOnly|	Location of the Timeline
 Source|	String|	ReadOnly|	Source of the Timeline
 ImageURL|	String|	ReadOnly|	Image URL of the Timeline
@@ -376,8 +374,8 @@ LinkURL|	String|	ReadOnly|	Link URL of the Timeline
 		Likes: 0,
 		Place: "Edmonton",
 		Source: "<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>",
-		ImageUrl: http://www.cancer-fund.org/images/share/diy/img_sample.gif,
-		LinkUrl: http://gimp.open-source-solution.org/manual/plug-in-sample-colorize.html
+		ImageUrl: "http://www.cancer-fund.org/images/share/diy/img_sample.gif",
+		LinkUrl: "http://gimp.open-source-solution.org/manual/plug-in-sample-colorize.html"
  	}
 	]
 
@@ -385,10 +383,10 @@ LinkURL|	String|	ReadOnly|	Link URL of the Timeline
 
 ##### <a name="CompDataFields">followed companies (LinkedIn)- Data Fields</a>
 
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
-ID|	Array|	ReadOnly|	ID of the company
-Name|	Array|	ReadOnly|	Name of the Company
+ID|	Number|	ReadOnly|	ID of the company
+Name|	String|	ReadOnly|	Name of the Company
 
 ##### <a name="CompJSON">followed companies (LinkedIn)- JSON Format</a>
 	[
@@ -409,11 +407,11 @@ This API is use to write/post message on users social network. The API has varia
 ####<a name="SendMessage">a)Send Messages (Twitter and Linkedin)</a>
 
 ####<a name="SendMDataFields">Send Messages (Twitter and Linkedin)-Data Fields</a>
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ---|---|---|---
-To|	String|	 |	Contactlist Member Id that user get from user contact list
-Subject|	String| |	 	Subject of the Message
-Message|	String||	 	Message
+To|	String|	WriteOnly  |	Contactlist Member Id that user get from user contact list
+Subject|	String| WriteOnly |	 	Subject of the Message
+Message|	String|WriteOnly |	 	Message
 
 ####<a name="SendMJSON">Send Messages - Response</a>
 True
@@ -422,15 +420,15 @@ True
 
 #####<a name="PostMDataFields"> Post Message - Data fields</a>
 
-Name|	Type|Read-Only|Description
+Name|	Type|Permission	|Description
 ----|----|---- |----
-To|	String	|| 	optional parameter if you want post status on a particular user wall then just pass memberid in to it work only in facebook
-Title|	String||	 	optional parameter status message title
-Url|	String||	 	optional parameter any url that you want post in status message
-ImageUrl|	String	|| 	optional parameter any image url that you want post in status message
-Status|	String||	 	your status message
-Caption|	String||	 	optional parameter caption that you want post in status message
-Description|	String||	 	optional parameter caption that you want post in status message
+To|	String	|WriteOnly| 	optional parameter if you want post status on a particular user wall then just pass memberid in to it work only in facebook
+Title|	String|WriteOnly|	 	optional parameter status message title
+Url|	String|WriteOnly|	 	optional parameter any url that you want post in status message
+ImageUrl|	String	|WriteOnly| 	optional parameter any image url that you want post in status message
+Status|	String|WriteOnly|	 	your status message
+Caption|	String|WriteOnly|	 	optional parameter caption that you want post in status message
+Description|	String|WriteOnly|	 	optional parameter caption that you want post in status message
 
 ##### <a name="PostMJSON">Post Message - Resposne</a>
 true
