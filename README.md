@@ -18,9 +18,9 @@ This API is use to authenticate users from their social network and fetch the us
 
 #### API specification
 
-API Endpoint| https://hub.loginradius.com/UserProfile.ashx?apisecrete={SECRET}&token={TOKEN} 
+API Endpoint| https://hub.loginradius.com/UserProfile/{SECRET}/{TOKEN} 
  ---------   |   ----- 
-**API help Endpoint** | https://hub.loginradius.com/userprofile.ashx/help
+**API help Endpoint** | https://hub.loginradius.com/userprofile/help
 **Request Type**     | HTTP Get Request
 **Input Parameters**      | LoginRadius API Secret, User profile session Token
 **Error Codes** | 403 Forbidden : Your API secret or token is invalid
@@ -33,7 +33,7 @@ The social profile data is divided into 2 groups:
  
 ##### JSON Format
 
-Name |Type	|Read-only	|Description
+Name |Type |Permission	|Description
 ------ | ---- | -------- | ---------
 ID	|String	|ReadOnly	|Social ID of the user
 Provider|	String|	ReadOnly|	Social ID Provider of the user
@@ -48,8 +48,8 @@ ProfileName|	String|	ReadOnly|	Profile Name of the user
 BirthDate|	String|	ReadOnly|	Birthdate of the user
 Gender|	String|	ReadOnly|	Gender of the user
 Website|	String	|ReadOnly	|Website of the user
-Email->Type|	String|	ReadOnly|	Email type
-Email->Value|	String|	ReadOnly|	Email of the user
+Email|	Array|	ReadOnly|	Email of the user
+
 Country|	String|	ReadOnly|	Country of the user
 ImageUrl|	String|	ReadOnly|	Image Url of the user
 
@@ -57,7 +57,7 @@ ImageUrl|	String|	ReadOnly|	Image Url of the user
 Extended profile data has lots of information about the user’s social profile data like address, phone no, interest, education, positions, etc. (see the list of all data fields below)
 
 ##### JSON Format
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 -----|-----|------|------
 ID|	String|	ReadOnly|	Social ID of the user
 Provider|	String|	ReadOnly|	Social ID Provider of the user
@@ -72,8 +72,7 @@ ProfileName|	String|	ReadOnly|	Profile Name of the user
 BirthDate|	String|	ReadOnly|	Birthdate of the user
 Gender|	String|	ReadOnly|	Gender of the user
 Website|	String|	ReadOnly|	Website of the user
-Email->Type|	String|	ReadOnly|	Email type
-Email->Value|	String|	ReadOnly|	Email of the user
+Email|	String|	ReadOnly| Email of the user 
 Country|	String|	ReadOnly|	Country of the user
 ThumbnailImageUrl|	String|	ReadOnly|	Thumbnail Image Url of the user social avatar
 ImageUrl|	String|	ReadOnly|	Image Url of the user
@@ -151,7 +150,7 @@ API Endpoint|	https://hub.loginradius.com/contacts/{SECRET}/{TOKEN}
 
 #### Data Fields
 
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	Social ID of the user
 Name|	String|	ReadOnly|	Name of the Friend/Follower/Connnection
@@ -182,7 +181,7 @@ API Endpoint|	https://hub.loginradius.com/GetGroups/{SECRET}/{TOKEN}
 **Response**|	JSON
 
 ##### Data Fields
- Name	|Type|	Read-only	|Description
+ Name	|Type|	Permission		|Description
 ----|---|----|---
 ID|	String|	ReadOnly|	Social ID of the user
 Name|	String|	ReadOnly|	Group Name
@@ -198,7 +197,7 @@ API Endpoint|https://hub.loginradius.com/GetPosts/{SECRET}/{TOKEN}
 **Response**|	JSON
 
 ##### Data Fields
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the post
 Name|	String|	ReadOnly|	Name of the user who has posted
@@ -222,7 +221,7 @@ API Endpoint|	https://hub.loginradius.com/GetEvents/{SECRET}/{TOKEN}
 **Response**|	JSON
 
 ##### Data Format
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the Event
 Name|	String|	ReadOnly|	Name of the Event
@@ -241,7 +240,7 @@ API Endpoint|	https://hub.loginradius.com/status/mentions/{SECRET}/{TOKEN}
 **Response**|	JSON
 
 ##### Data Format
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the mention
 Text|	String|	ReadOnly|	Text of the mention
@@ -263,7 +262,7 @@ API Endpoint	|https://hub.loginradius.com/status/timeline/{SECRET}/{TOKEN}
 **Response**|	JSON
 
 ##### Data Format
-Name|	Type	|Read-only|	Description
+Name|	Type	|Permission	|	Description
 ----|----|----|----
 ID|	String|	ReadOnly|	ID of the Timeline
 Text|	String|	ReadOnly|	Status of the Timeline
@@ -286,10 +285,10 @@ API Endpoint|	https://hub.loginradius.com/GetCompany/{SECRET}/{TOKEN}
 
 ##### Data Fields
 
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ----|----|----|----
-ID|	Array|	ReadOnly|	ID of the company
-Name|	Array|	ReadOnly|	Name of the Company
+ID|	Integer|	ReadOnly|	ID of the company
+Name|	String|	ReadOnly|	Name of the Company
 
 
 Write Permission API
@@ -308,11 +307,11 @@ API Endpoint |	https://hub.loginradius.com/directmessage/{SECRET}/{TOKEN}?sendto
 
 #### Parameters Format
 
-Name|	Type|	Read-only|	Description
+Name|	Type|	Permission	|	Description
 ---|---|---|---
-To|	String|	 |	Contactlist Member Id that user get from user contact list
-Subject|	String| |	 	Subject of the Message
-Message|	String||	 	Message
+To|	String| WriteOnly	 |	Contactlist Member Id that user get from user contact list
+Subject|	String|WriteOnly	  |	 	Subject of the Message
+Message|	String|WriteOnly	 |	 	Message
 
 #### Response
 True/False
@@ -329,15 +328,15 @@ Response|	Boolean
 
 #### Parameters Format:
 
-Name|	Type|Read-Only|Description
+Name|	Type|Permission	|Description
 ----|----|---- |----
-To|	String	|| 	optional parameter if you want post status on a particular user wall then just pass memberid in to it work only in facebook
-Title|	String||	 	optional parameter status message title
-Url|	String||	 	optional parameter any url that you want post in status message
-ImageUrl|	String	|| 	optional parameter any image url that you want post in status message
-Status|	String||	 	your status message
-Caption|	String||	 	optional parameter caption that you want post in status message
-Description|	String||	 	optional parameter caption that you want post in status message
+To|	String	|WriteOnly| 	optional parameter if you want post status on a particular user wall then just pass memberid in to it work only in facebook
+Title|	String|WriteOnly|	 	optional parameter status message title
+Url|	String|WriteOnly|	 	optional parameter any url that you want post in status message
+ImageUrl|	String	|WriteOnly| 	optional parameter any image url that you want post in status message
+Status|	String|WriteOnly|	 	your status message
+Caption|	String|WriteOnly|	 	optional parameter caption that you want post in status message
+Description|	String|WriteOnly|	 	optional parameter caption that you want post in status message
 
 #### Response
 true/false
